@@ -1,0 +1,187 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MSIR</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-01-01"><meta name="DC.source" content="MSIR.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">[M, N, S, I, R] = MSIR(100, 200, 300, 50, 0, 0.5, 0.2, 0.1, 30);
+
+disp(<span class="string">'Poblaci&oacute;n Materna:'</span>);
+disp(M);
+
+disp(<span class="string">'Poblaci&oacute;n Neonatal:'</span>);
+disp(N);
+
+disp(<span class="string">'Poblaci&oacute;n Suceptible:'</span>);
+disp(S);
+
+disp(<span class="string">'Poblaci&oacute;n Infectada:'</span>);
+disp(I);
+
+disp(<span class="string">'Poblaci&oacute;n Recuperada:'</span>);
+disp(R);
+
+
+<span class="keyword">function</span> [M, N, S, I, R] = MSIR_(M0, N0, S0, I0, R0, b, g, h, T)
+    t = 0;
+    hold <span class="string">on</span>
+    <span class="keyword">while</span> t &lt;= T
+        M_prev = M0; <span class="comment">% Poblaci&oacute;n Materna previa</span>
+        N_prev = N0; <span class="comment">% Poblaci&oacute;n Neonatal previa</span>
+        S_prev = S0; <span class="comment">% Poblaci&oacute;n Suceptible previa</span>
+        I_prev = I0; <span class="comment">% Poblaci&oacute;n Infectada previa</span>
+        R_prev = R0; <span class="comment">% Poblaci&oacute;n Recuperada previa</span>
+
+        t = t + h;
+
+        <span class="comment">% C&aacute;lculo de las tasas de cambio</span>
+        dM = 0; <span class="comment">% No hay cambio en la poblaci&oacute;n materna</span>
+        dN = 0; <span class="comment">% No hay cambio en la poblaci&oacute;n neonatal</span>
+        dS = -b * S_prev * I_prev; <span class="comment">% Cambio en la poblaci&oacute;n suceptible</span>
+        dI = b * S_prev * I_prev - g * I_prev; <span class="comment">% Cambio en la poblaci&oacute;n infectada</span>
+        dR = g * I_prev; <span class="comment">% Cambio en la poblaci&oacute;n recuperada</span>
+
+        <span class="comment">% Actualizaci&oacute;n de las poblaciones</span>
+        M = M_prev + dM * h;
+        N = N_prev + dN * h;
+        S = S_prev + dS * h;
+        I = I_prev + dI * h;
+        R = R_prev + dR * h;
+
+        <span class="comment">% Representaci&oacute;n gr&aacute;fica</span>
+        plot([t - h t], [M_prev M], <span class="string">'k'</span>)
+        plot([t - h t], [N_prev N], <span class="string">'b'</span>)
+        plot([t - h t], [S_prev S], <span class="string">'g'</span>)
+        plot([t - h t], [I_prev I], <span class="string">'r'</span>)
+        plot([t - h t], [R_prev R], <span class="string">'m'</span>)
+    <span class="keyword">end</span>
+    hold <span class="string">off</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput error">Execution of script MSIR as a function is not supported:
+C:\Users\ilias\OneDrive\Documentos\UNIVERSIDAD\PRIMER A&Ntilde;O\METODOS\METODOS
+2\Archivos_examen\MSIR.mlx
+
+Error in MSIR (line 1)
+[M, N, S, I, R] = MSIR(100, 200, 300, 50, 0, 0.5, 0.2, 0.1, 30);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+[M, N, S, I, R] = MSIR(100, 200, 300, 50, 0, 0.5, 0.2, 0.1, 30);
+
+disp('Población Materna:');
+disp(M);
+
+disp('Población Neonatal:');
+disp(N);
+
+disp('Población Suceptible:');
+disp(S);
+
+disp('Población Infectada:');
+disp(I);
+
+disp('Población Recuperada:');
+disp(R);
+
+
+function [M, N, S, I, R] = MSIR_(M0, N0, S0, I0, R0, b, g, h, T)
+    t = 0;
+    hold on 
+    while t <= T
+        M_prev = M0; % Población Materna previa
+        N_prev = N0; % Población Neonatal previa
+        S_prev = S0; % Población Suceptible previa
+        I_prev = I0; % Población Infectada previa
+        R_prev = R0; % Población Recuperada previa
+        
+        t = t + h;
+        
+        % Cálculo de las tasas de cambio
+        dM = 0; % No hay cambio en la población materna
+        dN = 0; % No hay cambio en la población neonatal
+        dS = -b * S_prev * I_prev; % Cambio en la población suceptible
+        dI = b * S_prev * I_prev - g * I_prev; % Cambio en la población infectada
+        dR = g * I_prev; % Cambio en la población recuperada
+        
+        % Actualización de las poblaciones
+        M = M_prev + dM * h;
+        N = N_prev + dN * h;
+        S = S_prev + dS * h;
+        I = I_prev + dI * h;
+        R = R_prev + dR * h;
+        
+        % Representación gráfica
+        plot([t - h t], [M_prev M], 'k')
+        plot([t - h t], [N_prev N], 'b')
+        plot([t - h t], [S_prev S], 'g')
+        plot([t - h t], [I_prev I], 'r')
+        plot([t - h t], [R_prev R], 'm')
+    end
+    hold off
+end
+
+
+##### SOURCE END #####
+--></body></html>
